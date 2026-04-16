@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
 import { ShoppingCart, Heart, User, Search, LogOut, Package, Shirt, Laptop, Smartphone, Sofa, Dumbbell, BookOpen, Sparkles, Plane, MapPin, Zap, ChevronDown, ShoppingBag, Ticket, Shield, CreditCard, Gift, Bell, Store, Headphones, LineChart } from 'lucide-react';
 import { useCart } from '@/lib/CartContext';
@@ -12,6 +12,7 @@ interface ProductSuggestion { id: number; name: string; primary_image: string; p
 
 export default function Navbar() {
   const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get('category') || '';
   const { count } = useCart();
@@ -206,8 +207,8 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Row 3: Category Strip */}
-      {categories.length > 0 && (
+      {/* Row 3: Category Strip (Only on Home Page) */}
+      {pathname === '/' && categories.length > 0 && (
         <div className="bg-white shadow-[0_4px_12px_rgba(0,0,0,0.05)] relative z-[999]">
           <div className="flex gap-4 md:gap-6 overflow-x-auto max-w-[1200px] mx-auto px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <Link href="/" className={`flex flex-col items-center gap-2 py-2.5 px-1 cursor-pointer transition-all border-b-[3px] whitespace-nowrap text-gray-800 relative hover:text-blue-primary ${!categoryParam ? 'border-b-blue-primary text-blue-primary font-bold' : 'border-transparent'}`}>

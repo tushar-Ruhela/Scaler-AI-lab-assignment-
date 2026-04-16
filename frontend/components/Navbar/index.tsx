@@ -22,7 +22,7 @@ export default function Navbar() {
   const [suggestions, setSuggestions] = useState<ProductSuggestion[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [showMoreMenu, setShowMoreMenu] = useState(false);
-  const searchWrapperRef = useRef<HTMLDivElement>(null);
+  const searchWrapperRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     api.get('/categories').then(({ data }) => setCategories(data.categories || [])).catch(() => {});

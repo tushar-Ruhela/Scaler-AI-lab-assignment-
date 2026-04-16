@@ -1,9 +1,83 @@
 const prisma = require('../db/prisma');
 const { getIdentifier } = require('../utils/helpers');
+const nodemailer = require('nodemailer');
 
-// Placeholder: integrate a real email provider (e.g. nodemailer, SendGrid) here
 async function sendOrderEmail(order, items, address) {
-  // TODO: send actual confirmation email to address.email
+  try {
+    const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_FROM_EMAIL } = process.env;
+    
+    // Only attempt to send if SMTP credentials are provided
+    if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS) {
+      console.log('⚠️ Email not sent: SMTP credentials missing from environment variables.');
+      return;
+    }
+
+    const transporter = nodemailer.createTransport({
+      host: SMTP_HOST,
+      port: parseInt(SMTP_PORT) || 587,
+      secure: parseInt(SMTP_PORT) === 465, // true for 465, false for other ports
+      auth: {
+        user: SMTP_USER,
+        pass: SMTP_PASS,
+      },
+    });
+
+    const itemsHtml = items.map(
+      (i) => `<li>${i.quantity}x <strong>${i.product_name}</strong></li>`
+    ).join('');
+
+    const mailOptions = {
+      from: SMTP_FROM_EMAIL || `"Flipkart Clone" <${SMTP_USER}>`,
+      to: address.email,
+      subject: `Order Confirmation - Order #${order.id}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
+          <div style="background-color: #2874f0; padding: 20px; color: white; text-align: center;">
+            <h2 style="margin: 0;">Order Confirmed! 🎉</h2>
+          </div>
+          <div style="padding: 20px;">
+            <p>Hi ${address.full_name},</p>
+            <p>Thank you for shopping with us! Your order <strong>#${order.id}</strong> has been placed successfully.</p>
+            
+            <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+              <tr style="background-color: #f1f3f6;">
+                <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>Items Ordered</strong></td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd;">
+                  <ul style="margin: 0; padding-left: 20px;">
+                    ${itemsHtml}
+                  </ul>
+                </td>
+              </tr>
+              <tr style="background-color: #f1f3f6;">
+                <td style="padding: 10px;"><strong>Total Amount: ₹${parseFloat(order.total_amount).toLocaleString('en-IN')}</strong></td>
+              </tr>
+            </table>
+
+            <div style="margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px;">
+              <h3 style="margin-top: 0;">Shipping Address</h3>
+              <p style="margin: 0; color: #555;">
+                ${address.full_name}<br/>
+                ${address.address_line1}, ${address.address_line2 ? address.address_line2 + ', ' : ''}<br/>
+                ${address.city}, ${address.state} - ${address.pincode}<br/>
+                Phone: ${address.phone}
+              </p>
+            </div>
+          </div>
+          <div style="background-color: #f1f3f6; color: #878787; text-align: center; padding: 15px; font-size: 12px;">
+            <p style="margin: 0;">This is an automated email, please do not reply.</p>
+          </div>
+        </div>
+      `,
+    };
+
+    const info = await transporter.sendMail(mailOptions);
+    console.log(`✅ Order confirmation email sent to ${address.email} (MessageId: ${info.messageId})`);
+  } catch (error) {
+    console.error('❌ Error sending order confirmation email:', error);
+    // We intentionally don't throw the error so the order placement still succeeds
+  }
 }
 
 const getOrders = async (req, res) => {

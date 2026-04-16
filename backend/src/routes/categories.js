@@ -1,18 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const prisma = require('../db/prisma');
+const categoriesController = require('../controllers/categoriesController');
 
-// GET /api/categories
-router.get('/', async (req, res) => {
-  try {
-    const categories = await prisma.categories.findMany({
-        orderBy: { name: 'asc' }
-    });
-    res.json({ categories });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Server error' });
-  }
-});
+router.get('/', categoriesController.getCategories);
 
 module.exports = router;

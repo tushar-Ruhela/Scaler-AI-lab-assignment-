@@ -28,36 +28,40 @@ export default function WishlistPage() {
             <Link href="/" className="bg-blue-primary text-white px-10 py-3 rounded-sm font-bold shadow-md hover:bg-blue-dark transition-all uppercase tracking-wide">Explore Products</Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-6">
             {items.map(item => (
-              <div key={item.id} className="bg-white rounded-sm shadow-sm overflow-hidden border border-gray-100 flex flex-col hover:shadow-md transition-all group">
-                <Link href={`/product/${item.product_id}`} className="block aspect-[4/5] p-6 flex items-center justify-center bg-white border-b border-gray-50 overflow-hidden">
+              <div key={item.id} className="bg-white rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.04)] overflow-hidden border border-gray-100 flex flex-col hover:shadow-[0_12px_24px_rgba(0,0,0,0.08)] transition-all duration-300 group relative">
+                <Link href={`/product/${item.product_id}`} className="block aspect-square p-4 md:p-6 flex items-center justify-center bg-white border-b border-gray-50 overflow-hidden">
                   <img src={item.image || '/placeholder.png'} alt={item.name} className="max-w-full max-h-full object-contain transition-transform duration-300 group-hover:scale-110" />
                 </Link>
-                <div className="p-4 flex flex-col flex-1">
+                
+                <button
+                  className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-white/80 backdrop-blur-sm rounded-full shadow-sm border border-gray-100 text-[#ff6161] hover:scale-110 transition-transform z-10"
+                  onClick={(e) => { e.preventDefault(); toggle(item.product_id); }}
+                  title="Remove from wishlist"
+                >
+                  <Heart size={16} className="fill-[#ff6161]" />
+                </button>
+
+                <div className="p-3 md:p-4 flex flex-col flex-1">
                   <Link href={`/product/${item.product_id}`} className="no-underline">
-                    <div className="text-sm font-medium text-gray-900 mb-1 hover:text-blue-primary transition-colors line-clamp-2 leading-relaxed h-10">{item.name}</div>
+                    <div className="text-[13px] md:text-[15px] font-medium text-gray-900 mb-1 hover:text-blue-primary transition-colors line-clamp-2 leading-[1.4] h-9 md:h-10">{item.name}</div>
                   </Link>
-                  <div className="text-lg font-bold text-gray-900 mb-3 mt-1">₹{parseFloat(item.price).toLocaleString('en-IN')}</div>
+                  <div className="text-base md:text-lg font-bold text-gray-900 mb-3 mt-1">₹{parseFloat(item.price).toLocaleString('en-IN')}</div>
                   
-                  {item.stock === 0 && (
-                    <div className="text-red-600 text-[12px] mb-4 font-bold bg-red-50 py-1 px-3 rounded-full w-fit">Out of Stock</div>
+                  {item.stock === 0 ? (
+                    <div className="text-red-600 text-[10px] md:text-[11px] mb-3 font-bold bg-red-50 py-1 px-3 rounded-full w-fit">Out of Stock</div>
+                  ) : (
+                    <div className="text-green text-[10px] md:text-[11px] mb-3 font-bold bg-green/5 py-1 px-3 rounded-full w-fit">In Stock</div>
                   )}
                   
-                  <div className="flex items-center gap-2 mt-auto pt-4 border-t border-gray-50">
+                  <div className="mt-auto">
                     <button
-                      className="flex-1 flex items-center justify-center gap-2 bg-[#ff9f00] text-white py-2.5 rounded-sm text-xs font-bold shadow-sm hover:bg-[#f39700] transition-all disabled:bg-gray-200 disabled:shadow-none uppercase"
+                      className="w-full flex items-center justify-center gap-2 bg-blue-primary text-white py-2.5 rounded-lg text-xs md:text-sm font-bold shadow-sm hover:bg-blue-dark transition-all disabled:bg-gray-200 disabled:shadow-none"
                       onClick={() => addToCart(item.product_id)}
                       disabled={item.stock === 0}
                     >
                       <ShoppingCart size={14} /> Add to Cart
-                    </button>
-                    <button
-                      className="w-10 h-10 flex items-center justify-center border border-gray-100 rounded-sm bg-white hover:bg-gray-50 transition-all shadow-sm"
-                      onClick={() => toggle(item.product_id)}
-                      title="Remove from wishlist"
-                    >
-                      <Heart size={18} className="text-[#ff6161] fill-[#ff6161]" />
                     </button>
                   </div>
                 </div>

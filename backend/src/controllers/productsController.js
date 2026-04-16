@@ -98,7 +98,7 @@ const getProductById = async (req, res) => {
         ...product,
         category_name: product.categories?.name,
         category_slug: product.categories?.slug,
-        images: product.product_images.map(i => i.url),
+        images: product.product_images.map((i, idx) => ({ id: idx, url: i.url, is_primary: idx === 0 })),
         specs: product.product_specs.map(s => ({ spec_key: s.spec_key, spec_value: s.spec_value }))
       }
     });

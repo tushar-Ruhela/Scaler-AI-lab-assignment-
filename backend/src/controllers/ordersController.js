@@ -6,77 +6,88 @@ async function sendOrderEmail(order, items, address) {
   try {
     const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_FROM_EMAIL } = process.env;
     
-    // Only attempt to send if SMTP credentials are provided
+    // 1. Validate Credentials
     if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS) {
-      console.log('⚠️ Email not sent: SMTP credentials missing from environment variables.');
+      console.warn('⚠️  [Email Skip]: SMTP credentials missing from environment variables (SMTP_HOST, SMTP_USER, or SMTP_PASS).');
       return;
     }
+
+    // 2. Validate Recipient
+    if (!address.email || !address.email.includes('@')) {
+      console.warn(`⚠️  [Email Skip]: Invalid or missing recipient email address: "${address.email}". Skipping notification for Order #${order.id}.`);
+      return;
+    }
+
+    console.log(`📧 [Email Start]: Preparing order confirmation for Order #${order.id} to ${address.email}...`);
 
     const transporter = nodemailer.createTransport({
       host: SMTP_HOST,
       port: parseInt(SMTP_PORT) || 587,
-      secure: parseInt(SMTP_PORT) === 465, // true for 465, false for other ports
+      secure: parseInt(SMTP_PORT) === 465, 
       auth: {
         user: SMTP_USER,
         pass: SMTP_PASS,
       },
+      tls: {
+        // Do not fail on invalid certs (common for some hosting environments)
+        rejectUnauthorized: false
+      }
     });
 
     const itemsHtml = items.map(
-      (i) => `<li>${i.quantity}x <strong>${i.product_name}</strong></li>`
+      (i) => `<li style="margin-bottom: 8px;">${i.quantity}x <strong style="color: #212121;">${i.product_name}</strong></li>`
     ).join('');
 
     const mailOptions = {
-      from: SMTP_FROM_EMAIL || `"Flipkart Clone" <${SMTP_USER}>`,
+      from: SMTP_FROM_EMAIL || `"Flipkart Clone Support" <${SMTP_USER}>`,
       to: address.email,
-      subject: `Order Confirmation - Order #${order.id}`,
+      subject: `Order Recieved! - Order #${order.id} is confirmed`,
       html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
-          <div style="background-color: #2874f0; padding: 20px; color: white; text-align: center;">
-            <h2 style="margin: 0;">Order Confirmed! 🎉</h2>
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eeeeee; border-radius: 12px; overflow: hidden; background-color: #ffffff;">
+          <div style="background-color: #2874f0; padding: 25px; color: white; text-align: center;">
+            <h1 style="margin: 0; font-size: 24px;">Order Confirmed! 🎉</h1>
+            <p style="margin: 10px 0 0 0; opacity: 0.9;">Thank you for shopping with Flipkart Clone</p>
           </div>
-          <div style="padding: 20px;">
-            <p>Hi ${address.full_name},</p>
-            <p>Thank you for shopping with us! Your order <strong>#${order.id}</strong> has been placed successfully.</p>
+          <div style="padding: 24px;">
+            <p style="font-size: 16px; color: #333;">Hi <strong>${address.full_name}</strong>,</p>
+            <p style="color: #555; line-height: 1.5;">Great news! We've received your order <strong>#${order.id}</strong> and are getting it ready for shipment.</p>
             
-            <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
-              <tr style="background-color: #f1f3f6;">
-                <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>Items Ordered</strong></td>
-              </tr>
-              <tr>
-                <td style="padding: 10px; border-bottom: 1px solid #ddd;">
-                  <ul style="margin: 0; padding-left: 20px;">
-                    ${itemsHtml}
-                  </ul>
-                </td>
-              </tr>
-              <tr style="background-color: #f1f3f6;">
-                <td style="padding: 10px;"><strong>Total Amount: ₹${parseFloat(order.total_amount).toLocaleString('en-IN')}</strong></td>
-              </tr>
-            </table>
+            <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; margin: 20px 0;">
+              <h3 style="margin: 0 0 15px 0; font-size: 14px; text-transform: uppercase; color: #878787; letter-spacing: 0.5px;">Items Ordered</h3>
+              <ul style="margin: 0; padding-left: 20px; color: #212121;">
+                ${itemsHtml}
+              </ul>
+              <div style="margin-top: 15px; border-top: 1px solid #e0e0e0; pt: 10px; display: flex; justify-content: space-between; font-weight: bold;">
+                <span style="color: #878787;">Total Amount Paid:</span>
+                <span style="color: #2874f0;">₹${parseFloat(order.total_amount).toLocaleString('en-IN')}</span>
+              </div>
+            </div>
 
-            <div style="margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px;">
-              <h3 style="margin-top: 0;">Shipping Address</h3>
-              <p style="margin: 0; color: #555;">
-                ${address.full_name}<br/>
+            <div style="padding: 20px; border: 1px solid #eeeeee; border-radius: 8px;">
+              <h3 style="margin: 0 0 10px 0; font-size: 14px; text-transform: uppercase; color: #878787;">Shipping to</h3>
+              <p style="margin: 0; color: #212121; line-height: 1.6; font-size: 14px;">
+                <strong>${address.full_name}</strong><br/>
                 ${address.address_line1}, ${address.address_line2 ? address.address_line2 + ', ' : ''}<br/>
                 ${address.city}, ${address.state} - ${address.pincode}<br/>
-                Phone: ${address.phone}
+                <span style="color: #878787;">Phone: ${address.phone}</span>
               </p>
             </div>
           </div>
-          <div style="background-color: #f1f3f6; color: #878787; text-align: center; padding: 15px; font-size: 12px;">
-            <p style="margin: 0;">This is an automated email, please do not reply.</p>
+          <div style="background-color: #f1f3f6; color: #878787; text-align: center; padding: 20px; font-size: 11px;">
+            <p style="margin: 0;">This is an automated delivery confirmation. For any queries, reach out to our support team.</p>
+            <p style="margin: 5px 0 0 0;">Flipkart Clone Inc. | Online Retail Portal</p>
           </div>
         </div>
       `,
     };
 
     const info = await transporter.sendMail(mailOptions);
-    console.log(`✅ Order confirmation email sent to ${address.email} (MessageId: ${info.messageId})`);
+    console.log(`✅ [Email Success]: Order confirmation email sent to ${address.email} (MessageId: ${info.messageId})`);
   } catch (error) {
-    console.error('❌ Error sending order confirmation email:', error);
-    // We intentionally don't throw the error so the order placement still succeeds
+    console.error(`❌ [Email Error]: Failed to send confirmation email for Order #${order.id}:`, error.message);
+    if (error.code === 'EAUTH') {
+      console.error('👉 Tip: Check your SMTP_USER and SMTP_PASS. If using Gmail, make sure you created an "App Password".');
+    }
   }
 }
 
@@ -213,8 +224,20 @@ const placeOrder = async (req, res) => {
         return { orderId: newOrder.id, cartItems, total };
     }, { timeout: 15000 });
 
-    const fakeItems = transaction.cartItems.map(c => ({ product_name: c.products.name, quantity: c.quantity }));
-    await sendOrderEmail({ id: transaction.orderId, total_amount: transaction.total }, fakeItems, address);
+    const orderItems = transaction.cartItems.map(c => ({ product_name: c.products.name, quantity: c.quantity }));
+    
+    // Fallback: If no email in address form, try to use user's registered email
+    let targetEmail = address.email;
+    if (!targetEmail && field === 'user_id') {
+      const user = await prisma.users.findUnique({ where: { id: parseInt(value) }, select: { email: true } });
+      if (user) targetEmail = user.email;
+    }
+
+    await sendOrderEmail(
+        { id: transaction.orderId, total_amount: transaction.total }, 
+        orderItems, 
+        { ...address, email: targetEmail }
+    );
 
     res.status(201).json({ message: 'Order placed successfully', orderId: transaction.orderId });
   } catch (err) {

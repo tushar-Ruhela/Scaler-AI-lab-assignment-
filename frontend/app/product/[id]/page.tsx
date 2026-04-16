@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Star, ShoppingCart, Heart, ChevronLeft, Shield, RotateCcw, Truck, Zap } from 'lucide-react';
 import api from '@/lib/api';
 import { useCart } from '@/lib/CartContext';

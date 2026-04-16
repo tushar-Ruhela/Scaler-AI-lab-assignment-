@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -19,8 +20,6 @@
   --radius-lg: 12px;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
 @layer base {
   body {
     background-color: #f1f3f6;
@@ -30,7 +29,7 @@
   }
 }
 
-/* Custom Scrollbar for better aesthetics */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -49,7 +48,7 @@
   background: #555;
 }
 
-/* Spinner for loading states */
+/* Spinner */
 .spinner {
   width: 40px;
   height: 40px;

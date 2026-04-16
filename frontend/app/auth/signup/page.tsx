@@ -30,64 +30,101 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="auth-page">
-      <div className="auth-card">
-        <div className="auth-left">
-          <h2>Looks like you're new here!</h2>
-          <p>Sign up with your details to get started</p>
-          <div className="auth-left-img" style={{ textAlign: 'center', fontSize: 80 }}>🎉</div>
+    <div className="bg-[#f1f3f6] min-h-[calc(100vh-120px)] flex items-center justify-center py-10 px-4 font-sans">
+      <div className="flex flex-col md:flex-row w-full max-w-[850px] min-h-[520px] bg-white rounded-sm shadow-xl overflow-hidden">
+        {/* Left sidebar - Brand Info */}
+        <div className="md:w-[40%] bg-blue-primary text-white p-10 flex flex-col justify-between relative overflow-hidden">
+          <div className="relative z-10">
+            <h2 className="text-3xl font-bold mb-4 tracking-tight">Looks like you&apos;re new here!</h2>
+            <p className="text-lg text-white/80 leading-relaxed font-medium">Sign up with your details to get started</p>
+          </div>
+          <div className="flex justify-center relative z-10 mb-10">
+             <div className="text-8xl drop-shadow-2xl animate-bounce">
+                🎉
+             </div>
+          </div>
+          {/* Decorative circles */}
+          <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-10 right-0 w-24 h-24 bg-white/5 rounded-full blur-2xl"></div>
         </div>
-        <div className="auth-right">
-          <h3>Create Account</h3>
-          <p className="subtitle">Join millions of happy shoppers</p>
-          <form className="auth-form" onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label className="form-label">Full Name</label>
-              <input
-                id="signup-name"
-                type="text"
-                className="form-input"
-                placeholder="Your full name"
-                value={name}
-                onChange={e => setName(e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Email</label>
-              <input
-                id="signup-email"
-                type="email"
-                className="form-input"
-                placeholder="you@example.com"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Password</label>
-              <div style={{ position: 'relative' }}>
+
+        {/* Right section - Form */}
+        <div className="flex-1 p-10 md:p-14 flex flex-col bg-white">
+          <div className="mb-10">
+            <h3 className="text-2xl font-bold text-gray-900 mb-2">Create Account</h3>
+            <p className="text-gray-500 text-sm font-medium">Join millions of happy shoppers</p>
+          </div>
+          
+          <form onSubmit={handleSubmit} className="flex flex-col flex-1">
+            <div className="space-y-6">
+              <div className="relative group border-b-2 border-gray-100 focus-within:border-blue-primary transition-all pb-1">
+                <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Full Name</label>
+                <input
+                  id="signup-name"
+                  type="text"
+                  placeholder="Enter full name"
+                  className="w-full py-1 bg-transparent outline-none text-sm font-medium text-gray-900 placeholder:text-gray-300"
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div className="relative group border-b-2 border-gray-100 focus-within:border-blue-primary transition-all pb-1">
+                <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">EmailID</label>
+                <input
+                  id="signup-email"
+                  type="email"
+                  placeholder="Enter email address"
+                  className="w-full py-1 bg-transparent outline-none text-sm font-medium text-gray-900 placeholder:text-gray-300"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div className="relative group border-b-2 border-gray-100 focus-within:border-blue-primary transition-all pb-1">
+                <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Password</label>
                 <input
                   id="signup-password"
                   type={showPw ? 'text' : 'password'}
-                  className="form-input"
-                  placeholder="Min 6 characters"
+                  placeholder="At least 6 characters"
+                  className="w-full py-1 bg-transparent outline-none text-sm font-medium text-gray-900 placeholder:text-gray-300 pr-10"
                   value={password}
                   onChange={e => setPassword(e.target.value)}
-                  style={{ width: '100%', paddingRight: 40 }}
+                  required
                 />
-                <button type="button" onClick={() => setShowPw(v => !v)}
-                  style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)', color: '#9aa0a6', background: 'none', border: 'none', cursor: 'pointer' }}>
-                  {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
+                <button 
+                  type="button" 
+                  onClick={() => setShowPw(v => !v)}
+                  className="absolute right-0 bottom-2 text-blue-primary hover:text-blue-dark transition-colors font-bold text-xs"
+                >
+                  {showPw ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
             </div>
-            <button type="submit" className="btn btn-primary btn-full" disabled={loading} id="signup-submit-btn">
-              {loading ? 'Creating Account...' : 'Create Account'}
+            
+            <button 
+              type="submit" 
+              className="w-full bg-[#fb641b] text-white py-4 rounded-sm font-bold shadow-lg hover:bg-[#f4511e] hover:shadow-xl active:scale-[0.99] transition-all uppercase tracking-wide disabled:bg-gray-300 disabled:shadow-none mt-10 text-sm" 
+              disabled={loading} 
+              id="signup-submit-btn"
+            >
+              {loading ? (
+                 <span className="flex items-center justify-center gap-2">
+                    <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                    CREATING ACCOUNT...
+                 </span>
+              ) : 'Continue'}
             </button>
+            
+            <div className="mt-8 text-center">
+              <Link href="/auth/login" className="text-sm font-bold text-blue-primary hover:text-blue-dark transition-colors py-3 px-6 rounded-sm border border-gray-100 bg-gray-50/50 hover:bg-gray-50 flex items-center justify-center group">
+                Existing User? Login
+                <span className="ml-1 group-hover:translate-x-1 transition-transform">&rsaquo;</span>
+              </Link>
+            </div>
           </form>
-          <p className="auth-link">
-            Existing user? <Link href="/auth/login">Login</Link>
-          </p>
         </div>
       </div>
     </div>

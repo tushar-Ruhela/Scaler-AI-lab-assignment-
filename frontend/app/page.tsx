@@ -62,125 +62,125 @@ function HomeContent() {
     <div>
       {/* Hero */}
       {!search && !category && (
-        <div className="hero-banner">
-          <h1>India's Biggest Online Store</h1>
-          <p>Electronics, Fashion, Home, Books, Sports & more — all at the best prices</p>
+        <div className="bg-gradient-to-br from-blue-primary to-[#1a3a8a] text-white py-12 px-6 text-center mb-6">
+          <h1 className="text-[2.5rem] font-extrabold mb-2 leading-tight">India&apos;s Biggest Online Store</h1>
+          <p className="text-[1.1rem] opacity-90 max-w-2xl mx-auto">Electronics, Fashion, Home, Books, Sports & more — all at the best prices</p>
         </div>
       )}
       
       {category === 'grocery' && (
-        <div style={{ background: '#e1610b', paddingTop: 20 }}>
-          <div className="container" style={{ padding: '0 16px 20px', textAlign: 'center' }}>
-            <h1 style={{ color: '#fff', fontSize: 32, fontWeight: 800, textTransform: 'uppercase', marginBottom: 12, letterSpacing: 1 }}>Celebrate Akshaya Tritiya</h1>
-            <p style={{ color: '#fff', fontSize: 16, opacity: 0.9 }}>Exciting grabs, fresh produce and amazing discounts!</p>
+        <div className="bg-[#e1610b] pt-5">
+          <div className="max-w-[1280px] mx-auto px-4 pb-5 text-center">
+            <h1 className="text-white text-[32px] font-extrabold uppercase mb-3 tracking-wider">Celebrate Akshaya Tritiya</h1>
+            <p className="text-white text-lg opacity-90 font-medium">Exciting grabs, fresh produce and amazing discounts!</p>
           </div>
         </div>
       )}
 
       {category === 'emi' && (
-        <div style={{ background: 'linear-gradient(to bottom, #2874f0, #1a4eb8)', minHeight: 'calc(100vh - 120px)', paddingTop: '60px', color: '#fff', textAlign: 'center', fontFamily: 'sans-serif' }}>
-          <div style={{ maxWidth: 800, margin: '0 auto', display: 'flex', flexDirection: 'column', height: '100%' }}>
-            <h1 style={{ fontSize: 56, fontWeight: 800, color: '#facc15', marginBottom: 8, textShadow: '0 2px 10px rgba(0,0,0,0.2)' }}>Instant EMI for Everyone</h1>
-            <h2 style={{ fontSize: 32, fontWeight: 600, marginBottom: 50, color: '#fff' }}>Get up to ₹500 Off* | <span style={{ color: '#facc15' }}>No Cost EMI</span></h2>
+        <div className="bg-gradient-to-b from-blue-primary to-[#1a4eb8] min-h-[calc(100vh-120px)] pt-[60px] text-white text-center font-sans">
+          <div className="max-w-[800px] mx-auto flex flex-col h-full px-4">
+            <h1 className="text-[40px] md:text-[56px] font-extrabold text-yellow-light mb-2 [text-shadow:0_2px_10px_rgba(0,0,0,0.2)] leading-tight">Instant EMI for Everyone</h1>
+            <h2 className="text-2xl md:text-[32px] font-semibold mb-12 text-white">Get up to ₹500 Off* | <span className="text-yellow-light">No Cost EMI</span></h2>
             
-            <div style={{ background: '#fff', borderRadius: 16, padding: '32px 48px', display: 'inline-flex', alignItems: 'center', gap: 24, boxShadow: '0 10px 40px rgba(0,0,0,0.3)', margin: '0 auto' }}>
-              <div style={{ background: '#facc15', borderRadius: '8px 8px 8px 32px', width: 80, height: 76, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Sparkles size={40} strokeWidth={2.5} color="#2874f0" />
+            <div className="bg-white rounded-2xl p-8 md:px-12 flex flex-row items-center gap-6 shadow-[0_10px_40px_rgba(0,0,0,0.3)] mx-auto w-fit">
+              <div className="bg-yellow-light rounded-lg rounded-br-[32px] w-20 h-[76px] flex items-center justify-center shrink-0">
+                <Sparkles size={40} strokeWidth={2.5} className="text-blue-primary" />
               </div>
-              <div style={{ textAlign: 'left' }}>
-                <div style={{ fontSize: 26, fontWeight: 800, color: '#2874f0', lineHeight: 1 }}>Flipkart</div>
-                <div style={{ fontSize: 44, fontWeight: 900, color: '#000', lineHeight: 1 }}>EMI</div>
+              <div className="text-left">
+                <div className="text-[26px] font-extrabold text-blue-primary leading-none">Flipkart</div>
+                <div className="text-[44px] font-black text-black leading-none mt-1">EMI</div>
               </div>
             </div>
 
-            <div style={{ marginTop: 120, background: '#2874f0', padding: '32px 0', borderTopLeftRadius: 32, borderTopRightRadius: 32, boxShadow: '0 -10px 30px rgba(0,0,0,0.2)' }}>
-              <h2 style={{ fontSize: 48, fontWeight: 900, color: '#facc15', textTransform: 'uppercase', letterSpacing: 2 }}>Apply Now</h2>
+            <div className="mt-[120px] bg-blue-primary py-8 border-t-[32px] border-t-transparent rounded-t-[32px] shadow-[0_-10px_30px_rgba(0,0,0,0.2)]">
+              <h2 className="text-[48px] font-black text-yellow-light uppercase tracking-widest">Apply Now</h2>
             </div>
           </div>
         </div>
       )}
 
       {category === 'travel' && (
-        <div style={{ background: '#f0f8ff', minHeight: 'calc(100vh - 120px)', padding: '32px 16px', fontFamily: 'sans-serif' }}>
-          <div className="container" style={{ maxWidth: 900 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, background: '#e0efff', padding: '12px 24px', borderRadius: 8 }}>
-              <h1 style={{ fontSize: 18, fontWeight: 700, color: '#000' }}>Welcome Tushar</h1>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 4, background: '#fff', padding: '4px 10px', borderRadius: 16, fontSize: 13, fontWeight: 600, color: '#202124' }}>
-                <Zap size={14} fill="#facc15" color="#ca8a04" /> 0
+        <div className="bg-[#f0f8ff] min-h-[calc(100vh-120px)] p-8 px-4 font-sans">
+          <div className="max-w-[900px] mx-auto">
+            <div className="flex justify-between items-center mb-6 bg-[#e0efff] p-3 px-6 rounded-lg">
+              <h1 className="text-lg font-bold text-black">Welcome Tushar</h1>
+              <div className="flex items-center gap-1 bg-white px-2.5 py-1 rounded-2xl text-[13px] font-semibold text-[#202124]">
+                <Zap size={14} className="fill-yellow-light text-yellow-600" /> 0
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20, marginBottom: 24 }}>
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-5 mb-6">
               {[ 
-                { title: 'Flights', subtitle: 'Up to 25% Off', color: '#10b981', img: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=500' },
-                { title: 'Hotels', subtitle: 'Up to 65% Off', color: '#10b981', img: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=500' },
-                { title: 'Buses', subtitle: '', color: '#10b981', img: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=500' }
+                { title: 'Flights', subtitle: 'Up to 25% Off', color: 'text-green-600', img: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=500' },
+                { title: 'Hotels', subtitle: 'Up to 65% Off', color: 'text-green-600', img: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=500' },
+                { title: 'Buses', subtitle: '', color: 'text-green-600', img: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=500' }
               ].map((item, i) => (
-                <div key={i} style={{ background: '#fff', borderRadius: 24, padding: 24, textAlign: 'center', boxShadow: '0 8px 24px rgba(0,0,0,0.06)', position: 'relative', overflow: 'hidden', height: 280, display: 'flex', flexDirection: 'column' }}>
-                  <h2 style={{ fontSize: 32, fontWeight: 800, color: '#111', marginBottom: 4, zIndex: 2 }}>{item.title}</h2>
-                  {item.subtitle && <p style={{ fontSize: 18, fontWeight: 700, color: item.color, zIndex: 2 }}>{item.subtitle}</p>}
-                  <img src={item.img} style={{ position: 'absolute', bottom: -20, left: 0, width: '100%', height: 160, objectFit: 'contain', zIndex: 1 }} alt={item.title} />
+                <div key={i} className="bg-white rounded-[24px] p-6 text-center shadow-[0_8px_24px_rgba(0,0,0,0.06)] relative overflow-hidden h-[280px] flex flex-col group">
+                  <h2 className="text-[32px] font-extrabold text-[#111] mb-1 z-[2] group-hover:scale-105 transition-transform">{item.title}</h2>
+                  {item.subtitle && <p className={`text-lg font-bold ${item.color} z-[2]`}>{item.subtitle}</p>}
+                  <img src={item.img} className="absolute -bottom-5 left-0 w-full h-40 object-contain z-[1] opacity-90 transition-transform group-hover:scale-110" alt={item.title} />
                 </div>
               ))}
             </div>
 
-            <div style={{ background: '#fff', borderRadius: 16, padding: '20px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', boxShadow: '0 4px 16px rgba(0,0,0,0.05)', marginBottom: 24, border: '1px solid #e0e7ff', cursor: 'pointer' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                <span style={{ fontSize: 28 }}>🧳</span>
-                <span style={{ fontSize: 24, fontWeight: 700, color: '#202124' }}>My trips</span>
+            <div className="bg-white rounded-2xl p-5 px-6 flex justify-between items-center shadow-[0_4px_16px_rgba(0,0,0,0.05)] mb-6 border border-[#e0e7ff] cursor-pointer hover:bg-gray-50 transition-colors">
+              <div className="flex items-center gap-4">
+                <span className="text-[28px]">🧳</span>
+                <span className="text-2xl font-bold text-[#202124]">My trips</span>
               </div>
-              <ChevronRight size={28} color="#202124" strokeWidth={2.5} />
+              <ChevronRight size={28} className="text-[#202124] stroke-[2.5]" />
             </div>
 
-            <div style={{ background: '#fff', borderRadius: 16, padding: '20px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', boxShadow: '0 4px 16px rgba(0,0,0,0.05)', border: '1px solid #e0e7ff' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
-                <div style={{ background: '#004c99', color: '#fff', padding: '8px 16px', fontWeight: 800, borderRadius: 2, letterSpacing: 1, fontSize: 20 }}>HDFC BANK</div>
+            <div className="bg-white rounded-2xl p-5 px-6 flex justify-between items-center shadow-[0_4px_16px_rgba(0,0,0,0.05)] border border-[#e0e7ff]">
+              <div className="flex items-center gap-6">
+                <div className="bg-[#004c99] text-white px-4 py-2 font-extrabold rounded-sm tracking-widest text-xl">HDFC BANK</div>
                 <div>
-                  <div style={{ fontSize: 20, fontWeight: 800, color: '#202124' }}>Up to 13% Off*</div>
-                  <div style={{ fontSize: 15, color: '#666', fontWeight: 500 }}>on Credit Card Trxns.</div>
+                  <div className="text-xl font-extrabold text-[#202124]">Up to 13% Off*</div>
+                  <div className="text-[15px] text-gray-500 font-medium">on Credit Card Trxns.</div>
                 </div>
               </div>
-              <div style={{ fontSize: 11, color: '#aaa', writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>*T&C Apply</div>
+              <div className="text-[11px] text-gray-300 [writing-mode:vertical-rl] rotate-180">*T&C Apply</div>
             </div>
           </div>
         </div>
       )}
 
       {category !== 'emi' && category !== 'travel' && (
-      <div className="container">
+      <div className="max-w-[1280px] mx-auto px-4">
         {/* Products section */}
         
         {!search && !category && (
-          <div style={{ marginBottom: 32 }}>
-            <h2 style={{ fontSize: 20, fontWeight: 700, marginBottom: 16 }}>Brands In Spotlight</h2>
-            <div style={{ borderRadius: 8, overflow: 'hidden', background: '#e0f7fa' }}>
+          <div className="mb-8">
+            <h2 className="text-xl font-bold mb-4">Brands In Spotlight</h2>
+            <div className="rounded-lg overflow-hidden bg-[#e0f7fa] shadow-sm">
               <img 
                 src="https://images.unsplash.com/photo-1629198688000-71f23e745b6e?w=1200&h=300&fit=crop" 
                 alt="Garnier Promotion" 
-                style={{ width: '100%', height: 'auto', display: 'block' }} 
+                className="w-full h-auto block" 
               />
             </div>
           </div>
         )}
 
-        <div className="products-section">
-          <div className="products-header">
-            <h2 style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        <div className="py-2 pb-6">
+          <div className="flex items-center justify-between mb-4 px-1">
+            <h2 className="flex items-center gap-3 text-lg font-bold text-gray-900">
               {search ? `Results for "${search}"` : category ? categories.find(c => c.slug === category)?.name || 'Products' : 'All Products'}
-              {pagination && <span style={{ fontWeight: 400, fontSize: 14, color: '#9aa0a6' }}>({pagination.total} items)</span>}
+              {pagination && <span className="font-normal text-sm text-gray-500">({pagination.total} items)</span>}
               {search && (
                 <button
                   onClick={() => router.push(category ? `/?category=${category}` : '/')}
-                  className="btn btn-sm" style={{ background: '#fce8e6', color: '#c62828', borderRadius: 20, padding: '4px 10px', fontSize: 12 }}
+                  className="bg-[#fce8e6] text-[#c62828] rounded-3xl px-2.5 py-1 text-xs hover:bg-[#fbd5d1] transition-colors"
                 >
                   Clear Search ✕
                 </button>
               )}
             </h2>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <SlidersHorizontal size={16} color="#9aa0a6" />
+            <div className="flex items-center gap-2">
+              <SlidersHorizontal size={16} className="text-gray-500" />
               <select
-                className="sort-select"
+                className="py-1.5 px-3 border border-gray-300 rounded-sm text-[13px] outline-none cursor-pointer hover:border-gray-400 focus:border-blue-primary focus:ring-1 focus:ring-blue-primary/10 transition-all font-medium text-gray-700 bg-white"
                 value={`${sort}_${order}`}
                 onChange={e => {
                   const [s, o] = e.target.value.split('_');
@@ -199,27 +199,27 @@ function HomeContent() {
           </div>
 
           {loading ? (
-            <div className="product-grid">
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-4">
               {Array.from({ length: 12 }).map((_, i) => (
-                <div key={i} className="product-card">
-                  <div className="skeleton" style={{ height: 200 }} />
-                  <div style={{ padding: 16 }}>
-                    <div className="skeleton" style={{ height: 14, marginBottom: 8, borderRadius: 4 }} />
-                    <div className="skeleton" style={{ height: 14, marginBottom: 8, borderRadius: 4, width: '80%' }} />
-                    <div className="skeleton" style={{ height: 20, borderRadius: 4, width: '50%' }} />
+                <div key={i} className="bg-white rounded-xl overflow-hidden border border-gray-100 p-0 shadow-sm">
+                  <div className="bg-gray-100 animate-pulse h-[200px]" />
+                  <div className="p-4">
+                    <div className="h-3.5 bg-gray-100 animate-pulse mb-2 rounded w-full" />
+                    <div className="h-3.5 bg-gray-100 animate-pulse mb-4 rounded w-4/5" />
+                    <div className="h-5 bg-gray-100 animate-pulse rounded w-1/2" />
                   </div>
                 </div>
               ))}
             </div>
           ) : products.length === 0 ? (
-            <div className="no-results">
-              <p style={{ fontSize: 18, fontWeight: 600 }}>No products found</p>
-              <p style={{ marginTop: 8 }}>Try a different search or category</p>
+            <div className="text-center py-20 px-6 text-gray-500 flex flex-col items-center">
+              <p className="text-xl font-semibold mb-2 text-gray-700">No products found</p>
+              <p className="opacity-80">Try a different search or category</p>
             </div>
           ) : (
             <>
-              {category === 'grocery' && <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 16, marginTop: 8 }}>Grab or Gone</h3>}
-              <div className="product-grid" style={category === 'grocery' ? { gap: 12, gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))' } : {}}>
+              {category === 'grocery' && <h3 className="text-lg font-bold mb-4 mt-2">Grab or Gone</h3>}
+              <div className={`grid gap-4 ${category === 'grocery' ? 'grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-3' : 'grid-cols-[repeat(auto-fill,minmax(220px,1fr))]'}`}>
                 {products.map(p => <ProductCard key={p.id} product={p} isGrocery={category === 'grocery'} />)}
               </div>
             </>
@@ -227,19 +227,32 @@ function HomeContent() {
 
           {/* Pagination */}
           {pagination && pagination.totalPages > 1 && (
-            <div className="pagination">
-              <button className="page-btn" onClick={() => goToPage(page - 1)} disabled={page === 1}>
+            <div className="flex gap-2 justify-center mt-12 pb-8">
+              <button 
+                className={`w-9 h-9 border border-gray-300 rounded-sm flex items-center justify-center transition-all bg-white hover:border-blue-primary hover:text-blue-primary disabled:opacity-30 disabled:cursor-not-allowed`}
+                onClick={() => goToPage(page - 1)} 
+                disabled={page === 1}
+              >
                 <ChevronLeft size={16} />
               </button>
               {Array.from({ length: pagination.totalPages }, (_, i) => i + 1)
                 .filter(p => p === 1 || p === pagination.totalPages || Math.abs(p - page) <= 2)
                 .map((p, idx, arr) => (
                   <Fragment key={p}>
-                    {idx > 0 && arr[idx - 1] !== p - 1 && <span style={{ padding: '0 8px', color: '#9aa0a6' }}>...</span>}
-                    <button className={`page-btn ${p === page ? 'active' : ''}`} onClick={() => goToPage(p)}>{p}</button>
+                    {idx > 0 && arr[idx - 1] !== p - 1 && <span className="flex items-center px-2 text-gray-400">...</span>}
+                    <button 
+                      className={`w-9 h-9 border rounded-sm flex items-center justify-center font-medium transition-all ${p === page ? 'bg-blue-primary border-blue-primary text-white shadow-md shadow-blue-primary/20' : 'bg-white border-gray-300 text-gray-700 hover:border-blue-primary hover:text-blue-primary'}`} 
+                      onClick={() => goToPage(p)}
+                    >
+                      {p}
+                    </button>
                   </Fragment>
                 ))}
-              <button className="page-btn" onClick={() => goToPage(page + 1)} disabled={page === pagination.totalPages}>
+              <button 
+                className={`w-9 h-9 border border-gray-300 rounded-sm flex items-center justify-center transition-all bg-white hover:border-blue-primary hover:text-blue-primary disabled:opacity-30 disabled:cursor-not-allowed`}
+                onClick={() => goToPage(page + 1)} 
+                disabled={page === pagination.totalPages}
+              >
                 <ChevronRight size={16} />
               </button>
             </div>

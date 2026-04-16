@@ -28,10 +28,13 @@ export default function CheckoutPage() {
 
   if (items.length === 0) {
     return (
-      <div className="container" style={{ textAlign: 'center', padding: '80px 0' }}>
-        <ShoppingBag size={60} color="#dadce0" />
-        <h2 style={{ marginTop: 16 }}>Nothing to checkout</h2>
-        <Link href="/" className="btn btn-primary" style={{ marginTop: 16 }}>Continue Shopping</Link>
+      <div className="max-w-[1280px] mx-auto px-4 py-32 text-center">
+        <div className="bg-white p-12 rounded-sm shadow-sm flex flex-col items-center">
+          <ShoppingBag size={80} className="text-gray-100 mb-6" />
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Nothing to checkout</h2>
+          <p className="text-gray-500 mb-8">Add items to your cart to see them here.</p>
+          <Link href="/" className="bg-blue-primary text-white px-12 py-3 rounded-sm font-bold shadow-md hover:bg-blue-dark transition-all">Continue Shopping</Link>
+        </div>
       </div>
     );
   }
@@ -63,12 +66,12 @@ export default function CheckoutPage() {
   };
 
   const Field = ({ name, label, type = 'text', placeholder = '', half = false, as = 'input' }: any) => (
-    <div className={`form-group ${half ? '' : 'full'}`}>
-      <label className="form-label" htmlFor={`field-${name}`}>{label}</label>
+    <div className={`flex flex-col gap-1.5 ${half ? '' : 'md:col-span-2'}`}>
+      <label className="text-sm font-semibold text-gray-700" htmlFor={`field-${name}`}>{label}</label>
       {as === 'select' ? (
         <select
           id={`field-${name}`}
-          className={`form-input ${errors[name] ? 'error' : ''}`}
+          className={`py-3 px-4 border rounded-sm outline-none bg-white text-sm transition-all focus:border-blue-primary focus:ring-1 focus:ring-blue-primary/10 ${errors[name] ? 'border-red-500' : 'border-gray-300'}`}
           value={(address as any)[name]}
           onChange={e => setAddress(a => ({ ...a, [name]: e.target.value }))}
         >
@@ -79,66 +82,109 @@ export default function CheckoutPage() {
           id={`field-${name}`}
           type={type}
           placeholder={placeholder}
-          className={`form-input ${errors[name] ? 'error' : ''}`}
+          className={`py-3 px-4 border rounded-sm outline-none text-sm transition-all focus:border-blue-primary focus:ring-1 focus:ring-blue-primary/10 ${errors[name] ? 'border-red-500' : 'border-gray-300'}`}
           value={(address as any)[name]}
           onChange={e => setAddress(a => ({ ...a, [name]: e.target.value }))}
         />
       )}
-      {errors[name] && <span style={{ color: '#c62828', fontSize: 12 }}>{errors[name]}</span>}
+      {errors[name] && <span className="text-red-600 text-[11px] font-medium">{errors[name]}</span>}
     </div>
   );
 
   return (
-    <div className="checkout-page">
-      <div className="container">
-        <div className="page-header">
-          <MapPin size={22} color="#2874f0" />
-          <h1>Checkout</h1>
+    <div className="bg-[#f1f3f6] min-h-screen py-6 md:py-8 font-sans">
+      <div className="max-w-[1280px] mx-auto px-4">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="flex items-center justify-center w-8 h-8 bg-blue-primary/10 rounded-full shrink-0">
+            <MapPin size={18} className="text-blue-primary" />
+          </div>
+          <h1 className="text-xl font-bold text-gray-900 tracking-tight">Checkout</h1>
         </div>
-        <div className="checkout-layout">
-          {/* Form */}
-          <div className="checkout-form-section">
-            <h2>Delivery Address</h2>
-            <div className="form-grid">
-              <Field name="full_name" label="Full Name *" placeholder="John Doe" half />
-              <Field name="phone" label="Phone Number *" placeholder="10-digit number" type="tel" half />
-              <Field name="email" label="Email (for confirmation)" placeholder="you@example.com" type="email" />
-              <Field name="address_line1" label="House No., Street *" placeholder="House/Flat No., Street" />
-              <Field name="address_line2" label="Locality / Area" placeholder="Locality, Area" />
-              <Field name="city" label="City *" placeholder="Mumbai" half />
-              <Field name="state" label="State *" half as="select" />
-              <Field name="pincode" label="Pincode *" placeholder="6-digit pincode" half />
+        
+        <div className="flex flex-col lg:flex-row gap-6 items-start">
+          {/* Form Section */}
+          <div className="flex-1 bg-white shadow-sm rounded-sm p-6 md:p-8 w-full">
+            <h2 className="text-lg font-bold text-gray-900 mb-8 pb-4 border-b border-gray-100 flex items-center gap-3">
+              Delivery Address
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+              <Field name="full_name" label="Full Name *" placeholder="Enter full name" half />
+              <Field name="phone" label="Phone Number *" placeholder="10-digit mobile number" type="tel" half />
+              <Field name="email" label="Email Address (Optional)" placeholder="you@example.com" type="email" />
+              <Field name="address_line1" label="House No., Street, Area *" placeholder="House/Flat No., Street, Landmark" />
+              <Field name="address_line2" label="Locality / Sector (Optional)" placeholder="Additional location details" />
+              <div className="grid grid-cols-2 gap-4 md:col-span-2">
+                <Field name="city" label="City *" placeholder="Enter city" />
+                <Field name="pincode" label="Pincode *" placeholder="6-digit pincode" />
+              </div>
+              <Field name="state" label="State *" as="select" />
             </div>
           </div>
 
-          {/* Order Summary */}
-          <div className="order-review">
-            <h3>Order Summary</h3>
-            {items.map(item => (
-              <div key={item.id} className="order-review-item">
-                <img src={item.image || '/placeholder.png'} alt={item.name} className="order-review-img" />
-                <span className="order-review-name">{item.name} × {item.quantity}</span>
-                <span className="order-review-price">₹{(item.price * item.quantity).toLocaleString('en-IN')}</span>
+          {/* Order Review Section */}
+          <div className="lg:w-[400px] w-full shrink-0 h-fit sticky top-24">
+            <div className="bg-white shadow-sm rounded-sm overflow-hidden">
+              <div className="bg-gray-50/50 p-4 px-6 border-b border-gray-100">
+                <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider">Order Summary</h3>
               </div>
-            ))}
-            <div style={{ borderTop: '1px solid #e8eaed', paddingTop: 12, marginTop: 4 }}>
-              <div className="summary-row"><span>MRP Total</span><span>₹{totalMrp.toLocaleString('en-IN')}</span></div>
-              <div className="summary-row"><span>Discount</span><span style={{ color: '#388e3c' }}>− ₹{saving.toLocaleString('en-IN')}</span></div>
-              <div className="summary-row"><span>Delivery</span><span style={{ color: '#388e3c' }}>FREE</span></div>
-              <div className="summary-row total"><span>Order Total</span><strong>₹{subtotal.toLocaleString('en-IN')}</strong></div>
+              <div className="p-6">
+                <div className="max-h-[300px] overflow-y-auto mb-6 pr-1 space-y-4">
+                  {items.map(item => (
+                    <div key={item.id} className="flex items-center gap-4 group">
+                      <div className="w-14 h-14 bg-white border border-gray-100 p-1 flex items-center justify-center rounded-sm shrink-0">
+                        <img src={item.image || '/placeholder.png'} alt={item.name} className="max-w-full max-h-full object-contain" />
+                      </div>
+                      <div className="flex-1 overflow-hidden">
+                        <span className="text-sm text-gray-800 line-clamp-1 font-medium mb-1 group-hover:text-blue-primary transition-colors">{item.name}</span>
+                        <div className="flex justify-between items-center text-xs">
+                          <span className="text-gray-500">Qty: {item.quantity}</span>
+                          <span className="font-bold text-gray-900">₹{(item.price * item.quantity).toLocaleString('en-IN')}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="border-t border-dashed border-gray-200 pt-6 space-y-3">
+                  <div className="flex justify-between text-sm text-gray-600">
+                    <span>Price ({items.length} items)</span>
+                    <span className="font-medium text-gray-900">₹{totalMrp.toLocaleString('en-IN')}</span>
+                  </div>
+                  <div className="flex justify-between text-sm text-gray-600">
+                    <span>Discount</span>
+                    <span className="text-green font-bold">- ₹{saving.toLocaleString('en-IN')}</span>
+                  </div>
+                  <div className="flex justify-between text-sm text-gray-600">
+                    <span>Delivery Charges</span>
+                    <span className="text-green font-bold uppercase text-[12px]">Free</span>
+                  </div>
+                  
+                  <div className="pt-4 mt-2 border-t border-gray-100 flex justify-between items-center">
+                    <span className="text-base font-bold text-gray-900">Total Amount</span>
+                    <span className="text-xl font-black text-gray-900 tracking-tight">₹{subtotal.toLocaleString('en-IN')}</span>
+                  </div>
+                </div>
+
+                <button
+                  className="w-full mt-8 bg-[#fb641b] text-white py-4 rounded-sm font-bold shadow-md hover:bg-[#f4511e] transition-all uppercase tracking-wide disabled:bg-gray-300 disabled:shadow-none"
+                  onClick={handlePlaceOrder}
+                  disabled={loading}
+                  id="place-order-btn"
+                >
+                  {loading ? (
+                    <span className="flex items-center justify-center gap-2">
+                       <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                       PLACING ORDER...
+                    </span>
+                  ) : `PLACE ORDER`}
+                </button>
+                
+                <div className="flex items-center justify-center gap-2 mt-4 text-[11px] text-gray-400 font-medium">
+                  <Shield size={14} />
+                  <span>SAFE AND SECURE PAYMENTS</span>
+                </div>
+              </div>
             </div>
-            <button
-              className="btn btn-orange btn-full"
-              style={{ marginTop: 20, padding: 14, fontSize: 15 }}
-              onClick={handlePlaceOrder}
-              disabled={loading}
-              id="place-order-btn"
-            >
-              {loading ? 'Placing Order...' : `Place Order — ₹${subtotal.toLocaleString('en-IN')}`}
-            </button>
-            <p style={{ fontSize: 12, color: '#9aa0a6', textAlign: 'center', marginTop: 10 }}>
-              🔒 Safe and Secure Payments
-            </p>
           </div>
         </div>
       </div>

@@ -15,9 +15,35 @@ interface Address {
 
 const STATES = ['Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Delhi','Goa','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal'];
 
+const Field = ({ address, setAddress, errors, name, label, type = 'text', placeholder = '', half = false, as = 'input' }: any) => (
+  <div className={`flex flex-col gap-1.5 ${half ? '' : 'md:col-span-2'}`}>
+    <label className="text-sm font-semibold text-gray-700" htmlFor={`field-${name}`}>{label}</label>
+    {as === 'select' ? (
+      <select
+        id={`field-${name}`}
+        className={`py-3 px-4 border rounded-sm outline-none bg-white text-sm transition-all focus:border-blue-primary focus:ring-1 focus:ring-blue-primary/10 ${errors[name] ? 'border-red-500' : 'border-gray-300'}`}
+        value={(address as any)[name]}
+        onChange={e => setAddress((a: any) => ({ ...a, [name]: e.target.value }))}
+      >
+        {STATES.map(s => <option key={s}>{s}</option>)}
+      </select>
+    ) : (
+      <input
+        id={`field-${name}`}
+        type={type}
+        placeholder={placeholder}
+        className={`py-3 px-4 border rounded-sm outline-none text-sm transition-all focus:border-blue-primary focus:ring-1 focus:ring-blue-primary/10 ${errors[name] ? 'border-red-500' : 'border-gray-300'}`}
+        value={(address as any)[name]}
+        onChange={e => setAddress((a: any) => ({ ...a, [name]: e.target.value }))}
+      />
+    )}
+    {errors[name] && <span className="text-red-600 text-[11px] font-medium">{errors[name]}</span>}
+  </div>
+);
+
 export default function CheckoutPage() {
   const router = useRouter();
-  const { items, subtotal, totalMrp, saving } = useCart();
+  const { items, subtotal, totalMrp, saving, fetchCart } = useCart();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [address, setAddress] = useState<Address>({
@@ -57,6 +83,7 @@ export default function CheckoutPage() {
     try {
       const { data } = await api.post('/orders', { address });
       toast.success('Order placed successfully!');
+      await fetchCart(); // Clear cart in UI
       router.push(`/order-confirmation/${data.orderId}`);
     } catch (err: any) {
       toast.error(err.response?.data?.error || 'Failed to place order');
@@ -65,31 +92,6 @@ export default function CheckoutPage() {
     }
   };
 
-  const Field = ({ name, label, type = 'text', placeholder = '', half = false, as = 'input' }: any) => (
-    <div className={`flex flex-col gap-1.5 ${half ? '' : 'md:col-span-2'}`}>
-      <label className="text-sm font-semibold text-gray-700" htmlFor={`field-${name}`}>{label}</label>
-      {as === 'select' ? (
-        <select
-          id={`field-${name}`}
-          className={`py-3 px-4 border rounded-sm outline-none bg-white text-sm transition-all focus:border-blue-primary focus:ring-1 focus:ring-blue-primary/10 ${errors[name] ? 'border-red-500' : 'border-gray-300'}`}
-          value={(address as any)[name]}
-          onChange={e => setAddress(a => ({ ...a, [name]: e.target.value }))}
-        >
-          {STATES.map(s => <option key={s}>{s}</option>)}
-        </select>
-      ) : (
-        <input
-          id={`field-${name}`}
-          type={type}
-          placeholder={placeholder}
-          className={`py-3 px-4 border rounded-sm outline-none text-sm transition-all focus:border-blue-primary focus:ring-1 focus:ring-blue-primary/10 ${errors[name] ? 'border-red-500' : 'border-gray-300'}`}
-          value={(address as any)[name]}
-          onChange={e => setAddress(a => ({ ...a, [name]: e.target.value }))}
-        />
-      )}
-      {errors[name] && <span className="text-red-600 text-[11px] font-medium">{errors[name]}</span>}
-    </div>
-  );
 
   return (
     <div className="bg-[#f1f3f6] min-h-screen py-6 md:py-8 font-sans">
@@ -108,16 +110,16 @@ export default function CheckoutPage() {
               Delivery Address
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
-              <Field name="full_name" label="Full Name *" placeholder="Enter full name" half />
-              <Field name="phone" label="Phone Number *" placeholder="10-digit mobile number" type="tel" half />
-              <Field name="email" label="Email Address (Optional)" placeholder="you@example.com" type="email" />
-              <Field name="address_line1" label="House No., Street, Area *" placeholder="House/Flat No., Street, Landmark" />
-              <Field name="address_line2" label="Locality / Sector (Optional)" placeholder="Additional location details" />
+              <Field address={address} setAddress={setAddress} errors={errors} name="full_name" label="Full Name *" placeholder="Enter full name" half />
+              <Field address={address} setAddress={setAddress} errors={errors} name="phone" label="Phone Number *" placeholder="10-digit mobile number" type="tel" half />
+              <Field address={address} setAddress={setAddress} errors={errors} name="email" label="Email Address (Optional)" placeholder="you@example.com" type="email" />
+              <Field address={address} setAddress={setAddress} errors={errors} name="address_line1" label="House No., Street, Area *" placeholder="House/Flat No., Street, Landmark" />
+              <Field address={address} setAddress={setAddress} errors={errors} name="address_line2" label="Locality / Sector (Optional)" placeholder="Additional location details" />
               <div className="grid grid-cols-2 gap-4 md:col-span-2">
-                <Field name="city" label="City *" placeholder="Enter city" />
-                <Field name="pincode" label="Pincode *" placeholder="6-digit pincode" />
+                <Field address={address} setAddress={setAddress} errors={errors} name="city" label="City *" placeholder="Enter city" />
+                <Field address={address} setAddress={setAddress} errors={errors} name="pincode" label="Pincode *" placeholder="6-digit pincode" />
               </div>
-              <Field name="state" label="State *" as="select" />
+              <Field address={address} setAddress={setAddress} errors={errors} name="state" label="State *" as="select" />
             </div>
           </div>
 

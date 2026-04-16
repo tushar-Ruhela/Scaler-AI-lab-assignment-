@@ -8,7 +8,7 @@ A fully functional e-commerce platform replicating Flipkart's design and user ex
 |---|---|
 | Frontend | Next.js 14 (App Router), TypeScript, Custom CSS |
 | Backend | Node.js, Express.js |
-| Database | PostgreSQL |
+| Database | PostgreSQL, Prisma ORM |
 | Auth | JWT (JSON Web Tokens) with bcryptjs |
 
 ## Features
@@ -29,26 +29,33 @@ A fully functional e-commerce platform replicating Flipkart's design and user ex
 - ✅ User Authentication (Login / Signup with JWT)
 - ✅ Order History page
 - ✅ Wishlist (toggle heart icon on product cards)
-- ✅ Email notification on order (console-mocked, configurable via SMTP)
+- ✅ Email notification on order (configurable)
 - ✅ Fully responsive design (mobile, tablet, desktop)
 
 ## Database Schema
 
-9 tables: `users`, `categories`, `products`, `product_images`, `product_specs`, `cart_items`, `orders`, `order_items`, `wishlists`
+9 Postgres tables managed via Prisma: `users`, `categories`, `products`, `product_images`, `product_specs`, `cart_items`, `orders`, `order_items`, `wishlists`
 
 ## Local Setup
 
 ### Prerequisites
-- Node.js v16+
+- Node.js v18+
 - PostgreSQL 14+
 
 ### 1. Clone & Install Dependencies
 
 ```bash
-git clone <your-repo-url>
-cd flipkart-clone
+git clone git@github.com:tushar-Ruhela/Scaler-AI-lab-assignment-.git
+cd Scaler-AI-labs-assignment
+
+# Install backend dependencies
+cd backend
 npm install
-npm run setup
+
+# Install frontend dependencies
+cd ../frontend
+npm install
+cd ..
 ```
 
 ### 2. Set Up PostgreSQL
@@ -66,33 +73,40 @@ GRANT ALL PRIVILEGES ON DATABASE flipkart_db TO flipkart_user;
 
 ### 3. Configure Environment
 
-The `backend/.env` file is pre-configured for local development:
+The `backend/.env` file is pre-configured for local development. Make sure it contains:
 ```
 DATABASE_URL=postgresql://flipkart_user:flipkart123@localhost:5432/flipkart_db
 JWT_SECRET=flipkart_super_secret_jwt_key_2024
 PORT=5000
 ```
 
-### 4. Run Migrations & Seed
+### 4. Run Prisma Migrations & Seed the DB
 
 ```bash
+cd backend
 npm run migrate
 npm run seed
 ```
 
-This creates all tables and inserts **50+ products** across **6 categories** along with a demo user:
+This creates all tables via Prisma and inserts **50+ products** across **6 categories** along with a demo user:
 - Email: `demo@example.com`
 - Password: `demo123`
 
 ### 5. Start Development Servers
 
+You will need two terminals:
+
+**Terminal 1 (Backend)**:
 ```bash
+cd backend
 npm run dev
 ```
 
-This starts both servers concurrently:
-- **Backend**: http://localhost:5000
-- **Frontend**: http://localhost:3000
+**Terminal 2 (Frontend)**:
+```bash
+cd frontend
+npm run dev
+```
 
 ## API Endpoints
 

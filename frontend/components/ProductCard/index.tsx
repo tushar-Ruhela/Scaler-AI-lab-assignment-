@@ -69,12 +69,12 @@ export default function ProductCard({ product, isGrocery }: { product: Product, 
   return (
     <div className="product-card group bg-white rounded-xl overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] cursor-pointer relative shadow-[0_2px_10px_rgba(0,0,0,0.06)] border border-gray-200 hover:shadow-[0_12px_24px_rgba(0,0,0,0.1)] hover:-translate-y-1 hover:border-blue-primary">
       <Link href={`/product/${product.id}`} className="no-underline block">
-        <div className="relative p-5 bg-white h-[200px] flex items-center justify-center overflow-hidden border-none text-center">
+        <div className="relative p-3 md:p-5 bg-white h-[160px] md:h-[200px] flex items-center justify-center overflow-hidden border-none text-center">
           <img
             src={product.primary_image || '/placeholder.png'}
             alt={product.name}
             loading="lazy"
-            className="max-h-[168px] w-full object-contain transition-transform duration-300 group-hover:scale-105"
+            className="max-h-[130px] md:max-h-[168px] w-full object-contain transition-transform duration-300 group-hover:scale-105"
           />
           {rating > 0 && (
             <div className="absolute bottom-2 left-2 bg-white/95 text-gray-800 px-2 py-1 rounded-xl text-[11px] font-bold flex items-center gap-1 shadow-[0_2px_4px_rgba(0,0,0,0.1)] border border-black/5">
@@ -82,19 +82,19 @@ export default function ProductCard({ product, isGrocery }: { product: Product, 
             </div>
           )}
         </div>
-        <div className="p-3 px-4 pb-5">
-          <div className="text-[15px] font-medium text-gray-900 mb-0.5 line-clamp-2 leading-[1.4] min-h-10">{product.name}</div>
-          <div className="text-[13px] text-gray-500 mb-2">{product.brand}</div>
+        <div className="p-2 md:p-3 px-3 md:px-4 pb-4 md:pb-5">
+          <div className="text-[13px] md:text-[15px] font-medium text-gray-900 mb-0.5 line-clamp-2 leading-[1.4] min-h-[36px] md:min-h-10">{product.name}</div>
+          <div className="text-[11px] md:text-[13px] text-gray-500 mb-1.5 md:mb-2">{product.brand}</div>
           
-          <div className="inline-block text-white px-2.5 py-1 rounded-sm text-[11px] font-bold mb-2 uppercase tracking-[0.5px]" style={{ background: tagBg }}>{tag}</div>
+          <div className="inline-block text-white px-2 md:px-2.5 py-0.5 md:py-1 rounded-sm text-[10px] md:text-[11px] font-bold mb-1.5 md:mb-2 uppercase tracking-[0.5px]" style={{ background: tagBg }}>{tag}</div>
           
-          <div className="flex items-baseline gap-2">
-            <span className="text-xl font-bold text-gray-900">₹{price.toLocaleString('en-IN')}</span>
-            {mrp > price && <span className="text-[15px] text-gray-500 line-through">₹{mrp.toLocaleString('en-IN')}</span>}
+          <div className="flex items-baseline gap-1.5 md:gap-2">
+            <span className="text-lg md:text-xl font-bold text-gray-900">₹{price.toLocaleString('en-IN')}</span>
+            {mrp > price && <span className="text-[13px] md:text-[15px] text-gray-500 line-through">₹{mrp.toLocaleString('en-IN')}</span>}
           </div>
           
           {mrp > price && (
-            <div className="text-xs text-green font-semibold mt-1">Extra {discount}% off</div>
+            <div className="text-[10px] md:text-xs text-green font-semibold mt-0.5 md:mt-1">Extra {discount}% off</div>
           )}
         </div>
       </Link>

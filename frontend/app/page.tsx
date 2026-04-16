@@ -219,7 +219,7 @@ function HomeContent() {
           ) : (
             <>
               {category === 'grocery' && <h3 className="text-lg font-bold mb-4 mt-2">Grab or Gone</h3>}
-              <div className={`grid gap-4 ${category === 'grocery' ? 'grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-3' : 'grid-cols-[repeat(auto-fill,minmax(220px,1fr))]'}`}>
+              <div className={`grid gap-2 md:gap-4 ${category === 'grocery' ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6' : 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5'}`}>
                 {products.map(p => <ProductCard key={p.id} product={p} isGrocery={category === 'grocery'} />)}
               </div>
             </>

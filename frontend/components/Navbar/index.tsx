@@ -72,169 +72,136 @@ export default function Navbar() {
   return (
     <>
       <nav className="bg-white border-b border-gray-200 relative z-[1000]">
-        {/* Row 1: Logo & Utility Pills */}
-        <div className="flex items-center justify-between px-4 py-2 max-w-[1280px] mx-auto gap-6">
-          <Link href="/" className="flex items-center justify-center bg-[#ffcc00] text-black px-3.5 py-1.5 rounded-sm rounded-br-xl font-extrabold italic no-underline text-base shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.1)] shrink-0 transition-transform duration-200 hover:scale-[1.02]">
-            <Sparkles className="w-3.5 mr-1 fill-blue-primary" size={14} />
-            Flipkart
-          </Link>
-          
-          <div className="flex items-center gap-2 md:gap-3 flex-1 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <Link href="/" className="flex items-center gap-1.5 bg-[#f0f2f5] px-3 md:px-4 py-2 rounded-[20px] text-xs md:text-[13px] font-semibold text-gray-800 cursor-pointer transition-colors duration-200 whitespace-nowrap hover:bg-[#e4e7eb]" style={!categoryParam ? { background: '#f5f5f5', border: '1px solid #e0e0e0' } : {}}>
-              <Sparkles size={14} color="#2874f0" />
+        <div className="max-w-[1280px] mx-auto">
+          {/* Row 1: Brand Switcher (Flipkart, EMI, Travel) */}
+          <div className="flex items-center gap-3 px-4 py-2 bg-gradient-to-b from-[#f1f3f6] to-white md:bg-white overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <Link href="/" className="flex items-center gap-1.5 bg-[#ffcc00] text-black px-4 py-1.5 rounded-[20px] text-[13px] font-bold shadow-sm shrink-0">
+              <Sparkles size={14} className="fill-blue-primary" />
               Flipkart
             </Link>
-            <Link href="/?category=emi" className="flex items-center gap-1.5 bg-[#f0f2f5] px-3 md:px-4 py-2 rounded-[20px] text-xs md:text-[13px] font-semibold text-gray-800 cursor-pointer transition-colors duration-200 whitespace-nowrap hover:bg-[#e4e7eb]" style={categoryParam === 'emi' ? { background: '#4a00e0', color: '#fff', border: 'none' } : {}}>
-              <span className="flex items-center justify-center w-4 h-4 rounded-full p-0.5" style={categoryParam === 'emi' ? { background: '#ffd700', color: '#000', fontSize: '10px' } : { background: '#dbfae1', color: '#16a34a', fontSize: '10px' }}>%</span>
+            <Link href="/?category=emi" className="flex items-center gap-1.5 bg-white border border-gray-200 px-4 py-1.5 rounded-[20px] text-[13px] font-semibold text-gray-700 hover:bg-gray-50 shrink-0">
+              <span className="flex items-center justify-center w-4 h-4 rounded-full bg-[#dbfae1] text-[#16a34a] text-[10px] font-bold">%</span>
               EMI
             </Link>
-            <Link href="/?category=travel" className="flex items-center gap-1.5 bg-[#f0f2f5] px-3 md:px-4 py-2 rounded-[20px] text-xs md:text-[13px] font-semibold text-gray-800 cursor-pointer transition-colors duration-200 whitespace-nowrap hover:bg-[#e4e7eb]" style={categoryParam === 'travel' ? { background: '#e3342f', color: '#fff', border: 'none' } : {}}>
-              <Plane size={14} color={categoryParam === 'travel' ? "#fff" : "#3b82f6"} />
+            <Link href="/?category=travel" className="flex items-center gap-1.5 bg-white border border-gray-200 px-4 py-1.5 rounded-[20px] text-[13px] font-semibold text-gray-700 hover:bg-gray-50 shrink-0">
+              <Plane size={14} className="text-red" />
               Travel
             </Link>
-            <Link href="/?category=grocery" className="flex items-center gap-1.5 bg-[#f0f2f5] px-3 md:px-4 py-2 rounded-[20px] text-xs md:text-[13px] font-semibold text-gray-800 cursor-pointer transition-colors duration-200 whitespace-nowrap hover:bg-[#e4e7eb]" style={categoryParam === 'grocery' ? { background: '#e1610b', color: '#fff', border: 'none' } : {}}>
-              <ShoppingBag size={14} color={categoryParam === 'grocery' ? "#fff" : "#8b5cf6"} />
-              Grocery
-            </Link>
-          </div>
-
-          <div className="hidden md:flex items-center gap-2 text-[13px] font-semibold text-gray-900 whitespace-nowrap cursor-pointer">
-            <MapPin size={16} color="#000" />
-            247776 <span className="text-blue-dark">Select delivery location &rsaquo;</span>
-          </div>
-
-          <div className="hidden sm:flex items-center gap-1 bg-[#fffdf5] border border-[#ffcc00] px-2.5 py-1 rounded-[20px] text-[13px] font-semibold text-black">
-            <Zap size={14} fill="#ffcc00" color="#e6b800" /> 0
-          </div>
-        </div>
-
-        {/* Row 2: Search & Account Actions */}
-        <div className="flex items-center gap-4 md:gap-8 px-4 pb-3 pt-1 md:pt-2 max-w-[1280px] mx-auto">
-          <div className="relative flex-1 max-w-[900px]">
-            <form className="w-full flex items-center bg-blue-light rounded-lg overflow-hidden border border-transparent transition-all duration-200 focus-within:bg-white focus-within:border-blue-primary focus-within:shadow-[0_0_0_4px_rgba(40,116,240,0.1)]" onSubmit={handleSearch}>
-              <button type="submit" className="bg-transparent border-none px-3 md:px-4 py-3 text-gray-600 cursor-pointer" aria-label="Search">
-                <Search size={20} />
-              </button>
-              <input
-                className="flex-1 py-3 border-none outline-none bg-transparent text-[15px] text-gray-900 font-medium placeholder:text-gray-600 placeholder:font-normal"
-                type="text"
-                placeholder="Search for Products, Brands and More"
-                value={searchQuery}
-                onFocus={() => setShowSuggestions(true)}
-                onChange={e => { setSearchQuery(e.target.value); setShowSuggestions(true); }}
-                id="navbar-search-input"
-                autoComplete="off"
-              />
-            </form>
             
-            {showSuggestions && suggestions.length > 0 && (
-              <div className="absolute top-[calc(100%+4px)] left-0 w-full bg-white rounded-lg shadow-[0_4px_16px_rgba(0,0,0,0.15)] border border-gray-200 z-[1001] overflow-hidden flex flex-col">
-                {suggestions.map(s => (
-                  <Link 
-                    key={s.id} 
-                    href={`/product/${s.id}`} 
-                    className="flex items-center gap-3 px-4 py-2.5 no-underline text-gray-900 border-b border-gray-100 transition-colors duration-200 cursor-pointer hover:bg-gray-50 last:border-none"
-                    onClick={() => { setShowSuggestions(false); setSearchQuery(''); }}
-                  >
-                    <img src={s.primary_image || '/placeholder.png'} className="w-8 h-8 object-contain shrink-0" alt={s.name} />
-                    <div className="flex-1 overflow-hidden">
-                      <div className="text-[13px] font-medium whitespace-nowrap overflow-hidden text-overflow-ellipsis">{s.name}</div>
-                      <div className="text-xs font-semibold text-blue-primary mt-0.5">₹{Number(s.price).toLocaleString('en-IN')}</div>
-                    </div>
-                  </Link>
-                ))}
+            <div className="flex-1" />
+            
+            {/* Desktop Only: Supercoin & Location inside row 1 */}
+            <div className="hidden md:flex items-center gap-4">
+              <div className="flex items-center gap-1 bg-[#fffdf5] border border-[#ffcc00] px-2.5 py-1 rounded-[20px] text-[12px] font-semibold text-black">
+                <Zap size={14} fill="#ffcc00" color="#e6b800" /> 0
               </div>
-            )}
+              <div className="flex items-center gap-2 text-[12px] font-semibold text-gray-900 whitespace-nowrap cursor-pointer">
+                <MapPin size={15} />
+                247776 <span className="text-blue-dark">Select location &rsaquo;</span>
+              </div>
+            </div>
           </div>
 
-          <div className="flex items-center gap-4 md:gap-6">
-            {user ? (
-              <div 
-                className="relative"
-                onMouseEnter={() => setShowUserMenu(true)}
-                onMouseLeave={() => setShowUserMenu(false)}
-              >
-                <div
-                  className="flex items-center gap-2 text-gray-800 text-[15px] font-medium cursor-pointer transition-colors duration-200 hover:text-blue-primary"
-                  id="user-menu-btn"
-                  style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
-                >
-                  <User size={22} className="shrink-0" />
-                  <span className="hidden sm:inline">{user.name.split(' ')[0]}</span>
-                  <ChevronDown size={14} style={{ transform: showUserMenu ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s', marginLeft: 4 }} />
-                </div>
-                {showUserMenu && (
-                  <div className="absolute top-[120%] right-0 bg-white rounded-sm shadow-[0_4px_16px_rgba(0,0,0,0.1)] min-w-[240px] z-[1000] overflow-hidden py-2 border border-gray-200">
-                    <div className="px-4 py-2 text-sm text-[#878787] border-b border-[#f0f0f0] mb-1">Your Account</div>
-                    
-                    {[
-                      { icon: User, label: 'My Profile', href: '/' },
-                      { icon: Package, label: 'Orders', href: '/orders' },
-                      { icon: Ticket, label: 'Coupons', href: '/' },
-                      { icon: Zap, label: 'Supercoin', href: '/' },
-                      { icon: Shield, label: 'Flipkart Plus Zone', href: '/' },
-                      { icon: CreditCard, label: 'Saved Cards & Wallet', href: '/' },
-                      { icon: MapPin, label: 'Saved Addresses', href: '/' },
-                      { icon: Heart, label: 'Wishlist', href: '/wishlist' },
-                      { icon: Gift, label: 'Gift Cards', href: '/' },
-                      { icon: Bell, label: 'Notifications', href: '/' },
-                    ].map((item, idx) => (
-                      <Link key={idx} href={item.href} onClick={() => setShowUserMenu(false)}
-                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-900 transition-colors duration-200 hover:bg-gray-50 bg-transparent"
-                      >
-                        <item.icon size={16} className="text-blue-primary" /> {item.label}
-                      </Link>
-                    ))}
-                    
-                    <button
-                      onClick={() => { logout(); setShowUserMenu(false); router.push('/'); }}
-                      className="flex items-center gap-3 px-4 py-2.5 text-sm text-red-dark w-full border-t border-[#f0f0f0] bg-transparent cursor-pointer text-left mt-1 hover:bg-gray-50"
-                    >
-                      <LogOut size={16} /> Logout
-                    </button>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <Link href="/auth/login" className="flex items-center gap-2 text-gray-800 text-[15px] font-medium transition-colors duration-200 hover:text-blue-primary" id="login-btn">
-                <User size={22} className="shrink-0" />
-                <span className="hidden sm:inline">Login</span>
-              </Link>
-            )}
+          {/* Row 2 (Mobile Only): Location Selector */}
+          <div className="md:hidden flex items-center justify-between px-4 py-1 text-[13px]">
+            <div className="flex items-center gap-1.5 text-gray-800 font-medium">
+              <MapPin size={14} className="text-gray-600" />
+              <span>Location not set</span>
+              <span className="text-blue-primary font-semibold flex items-center">Select delivery location <span className="text-[16px] leading-none ml-0.5">&rsaquo;</span></span>
+            </div>
+            <div className="flex items-center gap-1 bg-yellow-50 px-2 py-0.5 rounded-full text-[11px] font-bold border border-yellow-200">
+               <Zap size={12} fill="#ffcc00" className="text-yellow-600" /> 0
+            </div>
+          </div>
 
-            {user && (
-              <div
-                className="relative"
-                onMouseEnter={() => setShowMoreMenu(true)}
-                onMouseLeave={() => setShowMoreMenu(false)}
+          {/* Row 3: Search Bar & Notifications (Mobile) / Search & Account (Desktop) */}
+          <div className="flex items-center gap-4 px-4 pb-3 pt-1">
+            <div className="relative flex-1">
+              <form 
+                className="w-full flex items-center bg-[#f0f5ff] rounded-lg overflow-hidden border border-gray-100 transition-all duration-200 focus-within:bg-white focus-within:border-blue-primary focus-within:shadow-[0_0_0_4px_rgba(40,116,240,0.1)]" 
+                onSubmit={handleSearch}
+                ref={searchWrapperRef}
               >
-                <div className="flex items-center gap-1 text-gray-800 text-[15px] font-medium cursor-pointer px-2 transition-colors duration-200 hover:text-blue-primary h-full">
-                  <span className="hidden sm:inline">More</span> <ChevronDown size={14} style={{ transform: showMoreMenu ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s', marginLeft: 4 }} />
+                <div className="px-3 text-gray-500">
+                  <Search size={18} />
+                </div>
+                <input
+                  className="flex-1 py-2.5 md:py-3 border-none outline-none bg-transparent text-[14px] md:text-[15px] text-gray-900 font-medium placeholder:text-gray-500 placeholder:font-normal"
+                  type="text"
+                  placeholder="Search for Products"
+                  value={searchQuery}
+                  onFocus={() => setShowSuggestions(true)}
+                  onChange={e => { setSearchQuery(e.target.value); setShowSuggestions(true); }}
+                  autoComplete="off"
+                />
+              </form>
+              
+              {showSuggestions && suggestions.length > 0 && (
+                <div className="absolute top-[calc(100%+4px)] left-0 w-full bg-white rounded-lg shadow-[0_10px_30px_rgba(0,0,0,0.15)] border border-gray-100 z-[1001] overflow-hidden flex flex-col">
+                  {suggestions.map(s => (
+                    <Link key={s.id} href={`/product/${s.id}`} 
+                      className="flex items-center gap-3 px-4 py-3 no-underline text-gray-900 border-b border-gray-50 hover:bg-gray-50 transition-colors cursor-pointer last:border-none"
+                      onClick={() => { setShowSuggestions(false); setSearchQuery(''); }}
+                    >
+                      <img src={s.primary_image || '/placeholder.png'} className="w-8 h-8 object-contain" alt={s.name} />
+                      <div className="text-[13px] font-medium truncate">{s.name}</div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Desktop Navigation Links */}
+            <div className="hidden md:flex items-center gap-6">
+              {user ? (
+                <div className="relative" onMouseEnter={() => setShowUserMenu(true)} onMouseLeave={() => setShowUserMenu(false)}>
+                  <div className="flex items-center gap-2 text-gray-800 text-[15px] font-medium cursor-pointer hover:text-blue-primary">
+                    <User size={20} />
+                    <span>{user.name.split(' ')[0]}</span>
+                    <ChevronDown size={14} className={`transition-transform duration-200 ${showUserMenu ? 'rotate-180' : ''}`} />
+                  </div>
+                  {showUserMenu && (
+                    <div className="absolute top-[120%] right-0 bg-white rounded-sm shadow-[0_4px_16px_rgba(0,0,0,0.1)] min-w-[240px] z-[1000] py-2 border border-gray-200">
+                      <Link href="/orders" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-900 hover:bg-gray-50">
+                        <Package size={16} className="text-blue-primary" /> Orders
+                      </Link>
+                      <Link href="/wishlist" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-900 hover:bg-gray-50">
+                        <Heart size={16} className="text-blue-primary" /> Wishlist
+                      </Link>
+                      <button onClick={logout} className="flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 w-full text-left hover:bg-gray-50 border-t mt-1">
+                        <LogOut size={16} /> Logout
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link href="/auth/login" className="flex items-center gap-2 text-gray-800 text-[15px] font-medium hover:text-blue-primary">
+                  <User size={20} /> Login
+                </Link>
+              )}
+
+              <div className="relative" onMouseEnter={() => setShowMoreMenu(true)} onMouseLeave={() => setShowMoreMenu(false)}>
+                <div className="flex items-center gap-1 text-gray-800 text-[15px] font-medium cursor-pointer hover:text-blue-primary">
+                  <span>More</span> <ChevronDown size={14} className={`transition-transform duration-200 ${showMoreMenu ? 'rotate-180' : ''}`} />
                 </div>
                 {showMoreMenu && (
-                  <div className="absolute top-full right-[-40px] bg-white rounded-sm shadow-[0_4px_16px_rgba(0,0,0,0.1)] min-w-[220px] z-[1000] overflow-hidden py-2 border border-gray-200 mt-2">
-                    {[
-                      { icon: Store, label: 'Become a Seller', href: '/' },
-                      { icon: Bell, label: 'Notification Settings', href: '/' },
-                      { icon: Headphones, label: '24x7 Customer Care', href: '/' },
-                      { icon: LineChart, label: 'Advertise on Flipkart', href: '/' },
-                    ].map((item, idx) => (
-                      <Link key={idx} href={item.href}
-                        className="flex items-center gap-3.5 px-5 py-3.5 text-sm text-[#333] no-underline bg-transparent hover:bg-gray-50"
-                      >
-                        <item.icon size={18} className="text-gray-900" /> {item.label}
-                      </Link>
-                    ))}
+                  <div className="absolute top-full right-0 bg-white shadow-xl min-w-[200px] py-2 border border-gray-100 z-[1000] mt-2 rounded-sm">
+                    <Link href="/" className="flex items-center gap-3 px-5 py-3 text-sm text-gray-700 hover:bg-gray-50">
+                      <Bell size={16} /> Notifications
+                    </Link>
+                    <Link href="/" className="flex items-center gap-3 px-5 py-3 text-sm text-gray-700 hover:bg-gray-50">
+                      <Headphones size={16} /> Customer Care
+                    </Link>
                   </div>
                 )}
               </div>
-            )}
 
-            <Link href="/cart" className="flex items-center gap-2 text-gray-800 text-[15px] font-medium no-underline transition-colors duration-200 hover:text-blue-primary relative" id="cart-btn">
-              <ShoppingCart size={22} className="shrink-0" />
-              <span className="hidden sm:inline">Cart</span>
-              {count > 0 && <span className="absolute [-top-1.5] [right-[-12px]] sm:[-right-3] bg-red text-white rounded-full min-w-[18px] h-[18px] px-1 text-[11px] font-bold flex items-center justify-center border-2 border-white">{count}</span>}
-            </Link>
+              <Link href="/cart" className="flex items-center gap-2 text-gray-800 text-[15px] font-medium hover:text-blue-primary relative">
+                <ShoppingCart size={20} /> 
+                <span>Cart</span>
+                {count > 0 && <span className="absolute -top-2 -right-3 bg-red text-white rounded-full min-w-[17px] h-[17px] text-[10px] font-bold flex items-center justify-center border-2 border-white">{count}</span>}
+              </Link>
+            </div>
           </div>
         </div>
       </nav>

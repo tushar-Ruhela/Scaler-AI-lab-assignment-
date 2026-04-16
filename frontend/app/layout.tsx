@@ -6,6 +6,7 @@ import { CartProvider } from "@/lib/CartContext";
 import { WishlistProvider } from "@/lib/WishlistContext";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import BottomNav from "@/components/BottomNav";
 import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
@@ -29,8 +30,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Suspense fallback={null}>
                 <Navbar />
               </Suspense>
-              <main>{children}</main>
+              <main className="pb-20 md:pb-0">{children}</main>
               <Footer />
+              <BottomNav />
               <Toaster
                 position="bottom-center"
                 toastOptions={{

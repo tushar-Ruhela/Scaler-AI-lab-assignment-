@@ -20,10 +20,17 @@ app.use(cors({
   origin: (origin, callback) => {
     // Allow requests with no origin (like mobile apps or curl)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV !== 'production') {
+    
+    const isAllowed = allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV !== 'production';
+    
+    if (isAllowed) {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));
+      console.warn(`[CORS] Rejected origin: ${origin}`);
+      // Returning error with status to differentiate from internal server errors
+      const corsError = new Error('Not allowed by CORS');
+      corsError.status = 403;
+      callback(corsError);
     }
   },
   credentials: true
@@ -43,8 +50,20 @@ app.use('/api/wishlist', wishlistRoutes);
 
 // Error handler
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(err.status || 500).json({ error: err.message || 'Internal Server Error' });
+  const status = err.status || 500;
+  const isProd = process.env.NODE_ENV === 'production';
+  
+  if (status === 500) {
+    console.error('💥 Internal Server Error:', err.stack);
+  } else {
+    console.warn(`⚠️  ${status} Error: ${err.message}`);
+  }
+  
+  res.status(status).json({
+    error: err.message || 'Internal Server Error',
+    // Include stack trace only in development
+    ...(!isProd && { stack: err.stack })
+  });
 });
 
 const PORT = process.env.PORT || 5000;

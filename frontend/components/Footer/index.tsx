@@ -1,7 +1,5 @@
 export default function Footer() {
   return (
-export default function Footer() {
-  return (
     <footer className="bg-[#172337] text-white pt-10 mt-10 text-[12px] font-sans">
       <div className="max-w-[1280px] mx-auto px-6 pb-12 flex flex-wrap gap-x-8 gap-y-10 group">
         <div className="flex-1 min-w-[140px]">
@@ -102,7 +100,5 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-  );
-}
   );
 }

@@ -23,7 +23,10 @@
 
 @layer base {
   body {
-    @apply font-['Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif] bg-[#f1f3f6] text-[#212121] antialiased;
+    background-color: #f1f3f6;
+    color: #212121;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 

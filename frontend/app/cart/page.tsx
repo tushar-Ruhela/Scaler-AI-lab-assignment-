@@ -25,8 +25,8 @@ export default function CartPage() {
   }
 
   return (
-    <div className="bg-[#f1f3f6] min-h-screen py-6">
-      <div className="max-w-[1280px] mx-auto px-4">
+    <div className="bg-gray-100 min-h-screen py-6">
+      <div className="max-w-7xl mx-auto px-4">
         <div className="mb-6">
           <h1 className="text-lg font-bold text-gray-900 flex items-center gap-2">
             My Cart <span className="text-sm font-normal text-gray-500">({items.length} item{items.length !== 1 ? 's' : ''})</span>
@@ -156,7 +156,5 @@ export default function CartPage() {
         </div>
       </div>
     </div>
-  );
-}
   );
 }

@@ -582,21 +582,42 @@ input, select, textarea { font-family: inherit; }
   .auth-card { grid-template-columns: 1fr; }
   .auth-left { display: none; }
 }
+
 @media (max-width: 768px) {
-  .navbar-inner { gap: 8px; padding: 10px 12px; }
-  .navbar-logo { font-size: 18px; }
+  .navbar-row-top { gap: 12px; }
+  .navbar-delivery span, .navbar-coins { display: none; }
+  .navbar-quick-pills { gap: 6px; }
+  .npill { padding: 6px 12px; font-size: 12px; }
+  
+  .navbar-row-bottom { gap: 16px; padding: 4px 16px 12px; }
+  .nav-action-btn span { display: none; }
+  .nav-action-btn svg { width: 24px; height: 24px; }
+  
   .product-detail-grid { grid-template-columns: 1fr; }
-  .product-detail-images { position: static; }
-  .product-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+  .product-detail-images { position: static; padding: 16px; }
+  .product-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+  .hero-banner { padding: 32px 16px; }
   .hero-banner h1 { font-size: 1.75rem; }
+  
   .form-grid { grid-template-columns: 1fr; }
   .product-detail-actions { flex-direction: column; }
   .confirmation-actions { flex-direction: column; align-items: center; }
-  .navbar-btn span { display: none; }
 }
+
 @media (max-width: 480px) {
+  .navbar-row-top { padding: 8px 12px; }
+  .navbar-logo-pill { font-size: 14px; padding: 4px 10px; }
+  .navbar-row-bottom { padding: 4px 12px 12px; gap: 12px; }
+  
+  .category-bar-inner { gap: 16px; }
+  .category-item span { font-size: 12px; }
+  
   .product-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
-  .cart-item { flex-direction: column; }
+  .cart-item { flex-direction: column; padding: 16px; }
+  .cart-item-img { width: 80px; height: 80px; }
+  
+  .product-detail-info { padding: 16px; }
+  .product-detail-price { font-size: 24px; }
 }
 
 /* ===== MISC ===== */

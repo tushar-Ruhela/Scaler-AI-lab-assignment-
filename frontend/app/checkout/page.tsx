@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useCart } from '@/lib/CartContext';
 import api from '@/lib/api';
 import toast from 'react-hot-toast';
-import { MapPin, ShoppingBag } from 'lucide-react';
+import { MapPin, ShoppingBag, Shield } from 'lucide-react';
 import Link from 'next/link';
 
 interface Address {

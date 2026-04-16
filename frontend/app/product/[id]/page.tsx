@@ -61,8 +61,8 @@ export default function ProductDetailPage() {
       <div className="max-w-[1280px] mx-auto px-4">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-xs text-gray-500 mb-4 mt-2">
-          <a href="/" className="hover:text-blue-primary">Home</a> &rsaquo;
-          <a href={`/?category=${product.category_name?.toLowerCase().replace(/ /g,'-')}`} className="hover:text-blue-primary">{product.category_name}</a> &rsaquo;
+          <Link href="/" className="hover:text-blue-primary">Home</Link> &rsaquo;
+          <Link href={`/?category=${product.category_name?.toLowerCase().replace(/ /g,'-')}`} className="hover:text-blue-primary">{product.category_name}</Link> &rsaquo;
           <span className="text-gray-900 truncate max-w-[200px]">{product.name}</span>
         </div>
 

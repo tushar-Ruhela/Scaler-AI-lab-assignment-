@@ -252,7 +252,7 @@ export default function Navbar() {
       {categories.length > 0 && (
         <div className="category-bar-wrapper">
           <div className="category-bar-inner">
-            <Link href="/" className="category-item active">
+            <Link href="/" className={`category-item ${!categoryParam ? 'active' : ''}`}>
               <Sparkles size={24} />
               <span>For You</span>
             </Link>
@@ -262,7 +262,7 @@ export default function Navbar() {
                 <Link
                   key={cat.id}
                   href={`/?category=${cat.slug}`}
-                  className="category-item"
+                  className={`category-item ${categoryParam === cat.slug ? 'active' : ''}`}
                 >
                   <Icon size={24} strokeWidth={1.5} />
                   <span>{cat.name}</span>

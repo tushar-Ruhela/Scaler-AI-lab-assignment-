@@ -148,23 +148,6 @@ function HomeContent() {
 
       {category !== 'emi' && category !== 'travel' && (
       <div className="container">
-        {/* Category filter chips */}
-        <div className="filter-bar">
-          <button
-            className={`filter-chip ${!category && !search ? 'active' : ''}`}
-            onClick={() => router.push('/')}
-          >All Products</button>
-          {categories.map(cat => (
-            <button
-              key={cat.id}
-              className={`filter-chip ${category === cat.slug ? 'active' : ''}`}
-              onClick={() => updateParam('category', cat.slug)}
-            >
-              {cat.name}
-            </button>
-          ))}
-        </div>
-
         {/* Products section */}
         
         {!search && !category && (

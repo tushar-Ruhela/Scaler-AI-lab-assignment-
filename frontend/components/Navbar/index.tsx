@@ -19,10 +19,8 @@ export default function Navbar() {
   const { user, logout } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [categories, setCategories] = useState<Category[]>([]);
-  const [showUserMenu, setShowUserMenu] = useState(false);
   const [suggestions, setSuggestions] = useState<ProductSuggestion[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [showMoreMenu, setShowMoreMenu] = useState(false);
   const searchWrapperRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
@@ -155,46 +153,46 @@ export default function Navbar() {
             {/* Desktop Navigation Links */}
             <div className="hidden md:flex items-center gap-6">
               {user ? (
-                <div className="relative" onMouseEnter={() => setShowUserMenu(true)} onMouseLeave={() => setShowUserMenu(false)}>
-                  <div className="flex items-center gap-2 text-gray-800 text-[15px] font-medium cursor-pointer hover:text-blue-primary">
+                <div className="relative group cursor-pointer">
+                  <div className="flex items-center gap-2 text-gray-800 text-[15px] font-medium pb-[2px] group-hover:text-blue-primary transition-colors">
                     <User size={20} />
                     <span>{user.name.split(' ')[0]}</span>
-                    <ChevronDown size={14} className={`transition-transform duration-200 ${showUserMenu ? 'rotate-180' : ''}`} />
+                    <ChevronDown size={14} className="transition-transform duration-300 group-hover:rotate-180" />
                   </div>
-                  {showUserMenu && (
-                    <div className="absolute top-[120%] right-0 bg-white rounded-sm shadow-[0_4px_16px_rgba(0,0,0,0.1)] min-w-[240px] z-[1000] py-2 border border-gray-200">
-                      <Link href="/orders" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-900 hover:bg-gray-50">
+                  <div className="absolute top-[100%] right-0 pt-2 min-w-[240px] z-[1000] transition-all duration-300 origin-top opacity-0 invisible scale-95 group-hover:opacity-100 group-hover:visible group-hover:scale-100">
+                    <div className="bg-white rounded-md shadow-[0_8px_30px_rgba(0,0,0,0.12)] py-2 border border-gray-100">
+                      <Link href="/orders" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-800 hover:bg-blue-50 hover:text-blue-primary transition-colors">
                         <Package size={16} className="text-blue-primary" /> Orders
                       </Link>
-                      <Link href="/wishlist" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-900 hover:bg-gray-50">
+                      <Link href="/wishlist" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-800 hover:bg-blue-50 hover:text-blue-primary transition-colors">
                         <Heart size={16} className="text-blue-primary" /> Wishlist
                       </Link>
-                      <button onClick={logout} className="flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 w-full text-left hover:bg-gray-50 border-t mt-1">
+                      <button onClick={logout} className="flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 w-full text-left hover:bg-red-50 hover:text-red-700 border-t border-gray-100 mt-1 transition-colors">
                         <LogOut size={16} /> Logout
                       </button>
                     </div>
-                  )}
+                  </div>
                 </div>
               ) : (
-                <Link href="/auth/login" className="flex items-center gap-2 text-gray-800 text-[15px] font-medium hover:text-blue-primary">
+                <Link href="/auth/login" className="flex items-center gap-2 text-gray-800 text-[15px] font-medium hover:text-blue-primary pb-[2px]">
                   <User size={20} /> Login
                 </Link>
               )}
 
-              <div className="relative" onMouseEnter={() => setShowMoreMenu(true)} onMouseLeave={() => setShowMoreMenu(false)}>
-                <div className="flex items-center gap-1 text-gray-800 text-[15px] font-medium cursor-pointer hover:text-blue-primary">
-                  <span>More</span> <ChevronDown size={14} className={`transition-transform duration-200 ${showMoreMenu ? 'rotate-180' : ''}`} />
+              <div className="relative group cursor-pointer">
+                <div className="flex items-center gap-1 text-gray-800 text-[15px] font-medium pb-[2px] group-hover:text-blue-primary transition-colors">
+                  <span>More</span> <ChevronDown size={14} className="transition-transform duration-300 group-hover:rotate-180" />
                 </div>
-                {showMoreMenu && (
-                  <div className="absolute top-full right-0 bg-white shadow-xl min-w-[200px] py-2 border border-gray-100 z-[1000] mt-2 rounded-sm">
-                    <Link href="/" className="flex items-center gap-3 px-5 py-3 text-sm text-gray-700 hover:bg-gray-50">
+                <div className="absolute top-[100%] right-0 pt-2 min-w-[200px] z-[1000] transition-all duration-300 origin-top opacity-0 invisible scale-95 group-hover:opacity-100 group-hover:visible group-hover:scale-100">
+                  <div className="bg-white rounded-md shadow-[0_8px_30px_rgba(0,0,0,0.12)] py-2 border border-gray-100">
+                    <Link href="/" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-800 hover:bg-blue-50 hover:text-blue-primary transition-colors">
                       <Bell size={16} /> Notifications
                     </Link>
-                    <Link href="/" className="flex items-center gap-3 px-5 py-3 text-sm text-gray-700 hover:bg-gray-50">
+                    <Link href="/" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-800 hover:bg-blue-50 hover:text-blue-primary transition-colors">
                       <Headphones size={16} /> Customer Care
                     </Link>
                   </div>
-                )}
+                </div>
               </div>
 
               <Link href="/cart" className="flex items-center gap-2 text-gray-800 text-[15px] font-medium hover:text-blue-primary relative">
